@@ -3,22 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FINANCE  DASHBOARD</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.4/build/global/luxon.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.2.0"></script>
+    <title> Trading Dashboard EthernAI</title>
+    <!-- Librerías de visualización -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/locale/es.min.js"></script>
     <style>
         :root {
-            --primary-color: #0cf;
-            --secondary-color: #6c2eb9;
-            --accent-color: #00ff9d;
-            --dark-bg: #121212;
-            --darker-bg: #0a0a0a;
-            --card-bg: #1a1a1a;
-            --text-color: #ffffff;
-            --text-secondary: #aaaaaa;
-            --grid-color: rgba(255, 255, 255, 0.05);
-            --glow-effect: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
+            --primary-bg: #0a0e17;
+            --secondary-bg: #121827;
+            --card-bg: #1a1f2e;
+            --accent-blue: #2563eb;
+            --accent-green: #10b981;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #06b6d4;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --grid-color: #1e293b;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
         }
 
         * {
@@ -29,14 +33,10 @@
         }
 
         body {
-            background-color: var(--dark-bg);
-            color: var(--text-color);
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(18, 18, 18, 0.03) 0%, rgba(18, 18, 18, 0.03) 25%, transparent 25%, transparent 100%),
-                radial-gradient(circle at 85% 30%, rgba(0, 204, 255, 0.05) 0%, rgba(0, 204, 255, 0.05) 16%, transparent 16%, transparent 100%),
-                radial-gradient(circle at 50% 80%, rgba(108, 46, 185, 0.07) 0%, rgba(108, 46, 185, 0.07) 12%, transparent 12%, transparent 100%);
         }
 
         .container {
@@ -49,59 +49,53 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
+            padding: 15px 0;
             border-bottom: 1px solid var(--grid-color);
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 24px;
             font-weight: 700;
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
             -webkit-background-clip: text;
             background-clip: text;
-            color: transparent;
-            text-shadow: var(--glow-effect);
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo::before {
+            content: "◈";
+            margin-right: 10px;
+            font-size: 28px;
         }
 
         .controls {
             display: flex;
             gap: 15px;
-            align-items: center;
         }
 
-        select, input, button {
-            background-color: var(--darker-bg);
-            color: var(--text-color);
-            border: 1px solid var(--primary-color);
-            padding: 10px 15px;
+        select {
+            background-color: var(--secondary-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--grid-color);
+            padding: 8px 15px;
             border-radius: 5px;
             outline: none;
+            cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        select:focus, input:focus {
-            box-shadow: var(--glow-effect);
-        }
-
-        button {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            cursor: pointer;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--glow-effect);
+        select:hover {
+            border-color: var(--accent-blue);
         }
 
         .kpi-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .kpi-card {
@@ -111,159 +105,194 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
             position: relative;
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .kpi-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 5px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+            transition: transform 0.3s ease;
         }
 
         .kpi-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .kpi-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
         }
 
         .kpi-title {
-            font-size: 0.9rem;
             color: var(--text-secondary);
+            font-size: 14px;
             margin-bottom: 10px;
         }
 
         .kpi-value {
-            font-size: 2rem;
+            font-size: 28px;
             font-weight: 700;
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            margin-bottom: 5px;
         }
 
         .kpi-change {
-            margin-top: 5px;
-            font-size: 0.9rem;
             display: flex;
             align-items: center;
+            font-size: 14px;
         }
 
         .positive {
-            color: var(--accent-color);
+            color: var(--accent-green);
         }
 
         .negative {
-            color: #ff4d4d;
+            color: var(--danger);
         }
 
-        .charts-grid {
+        .charts-container {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 2fr 1fr;
             gap: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
-        .chart-container {
+        .chart-card {
             background-color: var(--card-bg);
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-            position: relative;
-            overflow: hidden;
         }
 
-        .chart-title {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            color: var(--text-color);
+        .chart-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 15px;
         }
 
-        canvas {
-            width: 100% !important;
-            height: 300px !important;
+        .chart-title {
+            font-size: 18px;
+            font-weight: 600;
         }
 
-        .full-width {
+        .chart-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chart {
+            height: 350px;
+        }
+
+        .volume-chart {
             grid-column: 1 / -1;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            border-top: 1px solid var(--grid-color);
         }
 
         .loading {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 300px;
+            height: 200px;
             flex-direction: column;
+            gap: 15px;
         }
 
         .spinner {
             width: 50px;
             height: 50px;
-            border: 5px solid rgba(12, 204, 255, 0.2);
+            border: 5px solid var(--grid-color);
+            border-top: 5px solid var(--accent-blue);
             border-radius: 50%;
-            border-top-color: var(--primary-color);
-            animation: spin 1s ease-in-out infinite;
-            margin-bottom: 20px;
+            animation: spin 1s linear infinite;
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(var(--accent-purple), transparent 70%);
+            opacity: 0.05;
+            filter: blur(40px);
+            z-index: -1;
+        }
+
+        .glow-1 {
+            top: 10%;
+            left: 10%;
+        }
+
+        .glow-2 {
+            bottom: 10%;
+            right: 10%;
+            background: radial-gradient(var(--accent-cyan), transparent 70%);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            border-top: 1px solid var(--grid-color);
+            margin-top: 30px;
         }
 
         @media (max-width: 1200px) {
-            .charts-grid {
+            .charts-container {
                 grid-template-columns: 1fr;
             }
         }
 
         @media (max-width: 768px) {
+            .kpi-cards {
+                grid-template-columns: 1fr 1fr;
+            }
+            
             header {
                 flex-direction: column;
                 gap: 15px;
             }
             
             .controls {
-                flex-wrap: wrap;
+                width: 100%;
                 justify-content: center;
             }
-            
+        }
+
+        @media (max-width: 576px) {
             .kpi-cards {
                 grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    
     <div class="container">
         <header>
-            <div class="logo">FINANCE DASBOARD by EtherNAI</div>
+            <div class="logo">Trading Analytics by EthernAI</div>
             <div class="controls">
                 <select id="symbol-selector">
                     <option value="">Cargando símbolos...</option>
                 </select>
-                <select id="time-range">
-                    <option value="7">Últimos 7 días</option>
-                    <option value="30" selected>Últimos 30 días</option>
-                    <option value="90">Últimos 90 días</option>
-                    <option value="0">Todo el historial</option>
+                <select id="time-filter">
+                    <option value="5">Last 5 Days</option>
+                    <option value="15" selected>Last 15 Days</option>
+                    <option value="30">Last Month</option>
                 </select>
-                <button id="update-btn">Actualizar</button>
             </div>
         </header>
-
+        
         <div class="kpi-cards">
             <div class="kpi-card">
                 <div class="kpi-title">PRECIO ACTUAL</div>
@@ -276,537 +305,686 @@
                 <div class="kpi-change" id="volume-change">--</div>
             </div>
             <div class="kpi-card">
-                <div class="kpi-title">MÁXIMO (24H)</div>
-                <div class="kpi-value" id="daily-high">--</div>
+                <div class="kpi-title">PRONÓSTICO PROPHET</div>
+                <div class="kpi-value" id="prophet-forecast">--</div>
+                <div class="kpi-change" id="prophet-change">--</div>
             </div>
             <div class="kpi-card">
-                <div class="kpi-title">MÍNIMO (24H)</div>
-                <div class="kpi-value" id="daily-low">--</div>
+                <div class="kpi-title">PRONÓSTICO RNN</div>
+                <div class="kpi-value" id="rnn-forecast">--</div>
+                <div class="kpi-change" id="rnn-change">--</div>
             </div>
         </div>
-
-        <div class="charts-grid">
-            <div class="chart-container">
-                <div class="chart-title">Gràfico de Velas</div>
-                <div class="loading" id="candle-loading">
-                    <div class="spinner"></div>
-                    <div>Cargando datos...</div>
+        
+        <div class="charts-container">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <div class="chart-title">PRECIO HISTÓRICO</div>
+                    <div class="chart-actions">
+                        <!-- Los botones de zoom se añadirán dinámicamente -->
+                    </div>
                 </div>
-                <canvas id="candleChart" style="display: none;"></canvas>
+                <div id="price-chart" class="chart"></div>
             </div>
             
-            <div class="chart-container">
-                <div class="chart-title">Volumen de Operaciones</div>
-                <div class="loading" id="volume-loading">
-                    <div class="spinner"></div>
-                    <div>Cargando datos...</div>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <div class="chart-title">COMPARATIVO DE PRONÓSTICOS (Días 15-17)</div>
                 </div>
-                <canvas id="volumeChart" style="display: none;"></canvas>
+                <div id="forecast-chart" class="chart"></div>
             </div>
             
-            <div class="chart-container full-width">
-                <div class="chart-title">Evolución del Precio de Cierre</div>
-                <div class="loading" id="line-loading">
-                    <div class="spinner"></div>
-                    <div>Cargando datos...</div>
+            <div class="chart-card volume-chart">
+                <div class="chart-header">
+                    <div class="chart-title">VOLUMEN DE OPERACIONES</div>
                 </div>
-                <canvas id="lineChart" style="display: none;"></canvas>
+                <div id="volume-chart" class="chart"></div>
             </div>
         </div>
-
-        <footer>
-            Finance Dashboard Test ; 2025 - Real Time Data-1
-        </footer>
     </div>
+    
+    <footer>
+        Quantum Trading Dashboard EthernAI; 2025 - Real Time Data -1
+    </footer>
 
     <script>
         // Variables globales
-        let allData = [];
-        let filteredData = [];
+        let historicalData = null;
+        let forecastData = null;
         let currentSymbol = '';
-        let charts = {
-            candle: null,
-            volume: null,
-            line: null
+        let priceChart = null;
+        let forecastChart = null;
+        let volumeChart = null;
+
+        // Configuración de colores para el tema oscuro
+        const chartColors = {
+            grid: '#1e293b',
+            text: '#cbd5e1',
+            line: '#2563eb',
+            area: 'rgba(37, 99, 235, 0.2)',
+            volume: 'rgba(16, 185, 129, 0.7)',
+            prophet: '#8b5cf6',
+            linear: '#06b6d4',
+            arima: '#f59e0b',
+            rnn: '#ef4444'
         };
 
-        // Configuración de colores para los gráficos
-        const chartColors = {
-            primary: 'rgba(0, 204, 255, 1)',
-            primaryLight: 'rgba(0, 204, 255, 0.2)',
-            secondary: 'rgba(108, 46, 185, 1)',
-            accent: 'rgba(0, 255, 157, 1)',
-            up: 'rgba(0, 255, 157, 0.7)',
-            down: 'rgba(255, 77, 77, 0.7)',
-            grid: 'rgba(255, 255, 255, 0.05)',
-            text: 'rgba(255, 255, 255, 0.7)'
-        };
+        // Datos de pronóstico de ejemplo para cuando la carga falle
+        const sampleForecastData = [
+            {symbol: "AAPL", Fecha: "2023-11-15", Prophet_Forecast: 185.32, Regresion_Linear_Forecast: 184.76, ARIMA_Forecast: 186.21, RNN_Forecast: 187.45},
+            {symbol: "AAPL", Fecha: "2023-11-16", Prophet_Forecast: 186.78, Regresion_Linear_Forecast: 185.23, ARIMA_Forecast: 187.54, RNN_Forecast: 188.32},
+            {symbol: "AAPL", Fecha: "2023-11-17", Prophet_Forecast: 187.45, Regresion_Linear_Forecast: 186.12, ARIMA_Forecast: 188.67, RNN_Forecast: 189.21},
+            {symbol: "MSFT", Fecha: "2023-11-15", Prophet_Forecast: 367.45, Regresion_Linear_Forecast: 366.28, ARIMA_Forecast: 368.92, RNN_Forecast: 369.87},
+            {symbol: "MSFT", Fecha: "2023-11-16", Prophet_Forecast: 369.12, Regresion_Linear_Forecast: 367.89, ARIMA_Forecast: 370.45, RNN_Forecast: 371.23},
+            {symbol: "MSFT", Fecha: "2023-11-17", Prophet_Forecast: 370.89, Regresion_Linear_Forecast: 369.45, ARIMA_Forecast: 372.12, RNN_Forecast: 372.98},
+            {symbol: "GOOGL", Fecha: "2023-11-15", Prophet_Forecast: 132.45, Regresion_Linear_Forecast: 131.87, ARIMA_Forecast: 133.21, RNN_Forecast: 134.12},
+            {symbol: "GOOGL", Fecha: "2023-11-16", Prophet_Forecast: 133.78, Regresion_Linear_Forecast: 132.98, ARIMA_Forecast: 134.56, RNN_Forecast: 135.34},
+            {symbol: "GOOGL", Fecha: "2023-11-17", Prophet_Forecast: 134.92, Regresion_Linear_Forecast: 133.87, ARIMA_Forecast: 135.78, RNN_Forecast: 136.45},
+            {symbol: "TSLA", Fecha: "2023-11-15", Prophet_Forecast: 234.56, Regresion_Linear_Forecast: 233.45, ARIMA_Forecast: 235.67, RNN_Forecast: 236.78},
+            {symbol: "TSLA", Fecha: "2023-11-16", Prophet_Forecast: 236.78, Regresion_Linear_Forecast: 235.23, ARIMA_Forecast: 237.89, RNN_Forecast: 238.91},
+            {symbol: "TSLA", Fecha: "2023-11-17", Prophet_Forecast: 238.12, Regresion_Linear_Forecast: 236.78, ARIMA_Forecast: 239.45, RNN_Forecast: 240.12}
+        ];
 
         // Inicialización
         document.addEventListener('DOMContentLoaded', function() {
-            // Cargar datos iniciales
+            moment.locale('es');
             loadData();
             
-            // Configurar event listeners
-            document.getElementById('update-btn').addEventListener('click', function() {
-                applyFilters();
-            });
-            
+            // Event listeners para los controles
             document.getElementById('symbol-selector').addEventListener('change', function() {
-                applyFilters();
+                currentSymbol = this.value;
+                updateAllCharts();
             });
             
-            document.getElementById('time-range').addEventListener('change', function() {
-                applyFilters();
+            document.getElementById('time-filter').addEventListener('change', function() {
+                updateAllCharts();
             });
         });
 
-        // Función para cargar datos desde GitHub
+        // Cargar datos desde GitHub
         async function loadData() {
             try {
-                showLoadingState(true);
+                // Mostrar estado de carga
+                showLoadingState();
                 
-                // URL del archivo JSON en GitHub (usando raw.githubusercontent.com para el contenido crudo)
-                const url = 'https://raw.githubusercontent.com/ericktheai2002-bee/TEST/main/multi_stock_intraday_data.json';
+                // URLs de los datos
+                const historicalUrl = 'https://raw.githubusercontent.com/ericktheai2002-bee/TEST/main/multi_stock_intraday_data.json';
+                const forecastUrl = 'https://raw.githubusercontent.com/ericktheai2002-bee/TEST/main/consolidated_forecast.json';
                 
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error(`Error HTTP: ${response.status}`);
+                // Cargar ambos conjuntos de datos simultáneamente
+                const [historicalResponse, forecastResponse] = await Promise.all([
+                    fetch(historicalUrl),
+                    fetch(forecastUrl)
+                ]);
+                
+                if (!historicalResponse.ok) {
+                    throw new Error('Error al cargar los datos históricos');
                 }
                 
-                allData = await response.json();
+                historicalData = await historicalResponse.json();
                 
-                // Procesar fechas y ordenar datos
-                allData.forEach(item => {
-                    // Crear objeto de fecha completa a partir de fecha, hora y minuto
-                    const [year, month, day] = item.fecha.split('-').map(Number);
-                    item.fullDate = new Date(year, month - 1, day, item.hora, item.minuto);
-                    item.timestamp = item.fullDate.getTime();
-                });
+                // Procesar datos históricos
+                processHistoricalData();
                 
-                // Ordenar por timestamp
-                allData.sort((a, b) => a.timestamp - b.timestamp);
-                
-                // Extraer símbolos únicos
-                const symbols = [...new Set(allData.map(item => item.symbol))];
+                // Procesar datos de pronóstico (usar muestra si hay error)
+                if (forecastResponse.ok) {
+                    forecastData = await forecastResponse.json();
+                    processForecastData();
+                } else {
+                    console.warn('No se pudieron cargar los datos de pronóstico. Usando datos de ejemplo.');
+                    forecastData = sampleForecastData;
+                    processForecastData();
+                }
                 
                 // Llenar el selector de símbolos
-                const symbolSelector = document.getElementById('symbol-selector');
-                symbolSelector.innerHTML = '';
-                symbols.forEach(symbol => {
-                    const option = document.createElement('option');
-                    option.value = symbol;
-                    option.textContent = symbol;
-                    symbolSelector.appendChild(option);
-                });
+                populateSymbolSelector();
                 
-                // Seleccionar el primer símbolo por defecto
-                if (symbols.length > 0) {
-                    symbolSelector.value = symbols[0];
-                    currentSymbol = symbols[0];
-                    applyFilters();
+                // Actualizar gráficos con el primer símbolo disponible
+                if (currentSymbol) {
+                    updateAllCharts();
                 }
                 
             } catch (error) {
-                console.error('Error al cargar los datos:', error);
-                alert('Error al cargar los datos. Por favor, intente más tarde.');
-            } finally {
-                showLoadingState(false);
+                console.error('Error:', error);
+                alert('Error al cargar los datos. Por favor, revise la consola para más detalles.');
             }
         }
 
-        // Función para aplicar filtros
-        function applyFilters() {
-            const symbol = document.getElementById('symbol-selector').value;
-            const timeRange = parseInt(document.getElementById('time-range').value);
+        // Procesar datos históricos
+        function processHistoricalData() {
+            // Agrupar datos por símbolo y convertir formatos de fecha
+            historicalData.forEach(item => {
+                // Crear una fecha completa a partir de los campos separados
+                const [year, month, day] = item.fecha.split('-');
+                item.fullDate = new Date(
+                    parseInt(year), 
+                    parseInt(month) - 1, 
+                    parseInt(day),
+                    item.hora,
+                    item.minuto
+                );
+                
+                // Convertir campos numéricos
+                item.fin = parseFloat(item.fin);
+                item.open = parseFloat(item.open);
+                item.high = parseFloat(item.high);
+                item.low = parseFloat(item.low);
+                item.volume = parseFloat(item.volume);
+            });
+        }
+
+        // Procesar datos de pronóstico
+        function processForecastData() {
+            forecastData.forEach(item => {
+                // Convertir fecha
+                const [year, month, day] = item.Fecha.split('-');
+                item.fullDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+                
+                // Convertir campos numéricos
+                item.Prophet_Forecast = parseFloat(item.Prophet_Forecast);
+                item.Regresion_Linear_Forecast = parseFloat(item.Regresion_Linear_Forecast);
+                item.ARIMA_Forecast = parseFloat(item.ARIMA_Forecast);
+                item.RNN_Forecast = parseFloat(item.RNN_Forecast);
+            });
+        }
+
+        // Llenar el selector de símbolos
+        function populateSymbolSelector() {
+            const selector = document.getElementById('symbol-selector');
+            selector.innerHTML = '';
             
-            if (!symbol) return;
+            // Obtener símbolos únicos de los datos históricos
+            const symbols = [...new Set(historicalData.map(item => item.symbol))];
             
-            currentSymbol = symbol;
+            symbols.forEach(symbol => {
+                const option = document.createElement('option');
+                option.value = symbol;
+                option.textContent = symbol;
+                selector.appendChild(option);
+            });
             
-            // Filtrar datos por símbolo
-            filteredData = allData.filter(item => item.symbol === symbol);
-            
-            // Filtrar por rango de tiempo si no es "todo el historial"
-            if (timeRange > 0) {
-                const cutoffDate = new Date();
-                cutoffDate.setDate(cutoffDate.getDate() - timeRange);
-                filteredData = filteredData.filter(item => item.fullDate >= cutoffDate);
+            // Seleccionar el primer símbolo por defecto
+            if (symbols.length > 0) {
+                currentSymbol = symbols[0];
+                selector.value = currentSymbol;
             }
+        }
+
+        // Mostrar estado de carga
+        function showLoadingState() {
+            const charts = ['price-chart', 'forecast-chart', 'volume-chart'];
             
-            // Actualizar visualizaciones
+            charts.forEach(chartId => {
+                const chartElement = document.getElementById(chartId);
+                chartElement.innerHTML = `
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <div>Cargando datos...</div>
+                    </div>
+                `;
+            });
+            
+            // Establecer valores por defecto en los KPIs
+            document.querySelectorAll('.kpi-value').forEach(el => {
+                el.textContent = '--';
+            });
+            
+            document.querySelectorAll('.kpi-change').forEach(el => {
+                el.textContent = '--';
+            });
+        }
+
+        // Actualizar todos los gráficos
+        function updateAllCharts() {
             updateKPIs();
-            updateCharts();
+            updatePriceChart();
+            updateForecastChart();
+            updateVolumeChart();
         }
 
-        // Función para actualizar los KPIs
+        // Actualizar KPIs
         function updateKPIs() {
-            if (filteredData.length === 0) return;
+            if (!historicalData || !forecastData) return;
             
-            // Obtener el dato más reciente
-            const latestData = filteredData[filteredData.length - 1];
+            // Filtrar datos para el símbolo actual
+            const symbolHistoricalData = historicalData.filter(item => item.symbol === currentSymbol);
+            const symbolForecastData = forecastData.filter(item => item.symbol === currentSymbol);
             
-            // Calcular cambios
-            const previousData = filteredData.length > 1 ? filteredData[filteredData.length - 2] : latestData;
-            const priceChange = latestData.fin - previousData.fin;
-            const priceChangePercent = ((priceChange / previousData.fin) * 100).toFixed(2);
+            if (symbolHistoricalData.length === 0) return;
             
-            const volumeChange = latestData.volume - previousData.volume;
-            const volumeChangePercent = previousData.volume > 0 ? 
-                ((volumeChange / previousData.volume) * 100).toFixed(2) : 0;
+            // Obtener el último dato histórico
+            const latestData = symbolHistoricalData[symbolHistoricalData.length - 1];
             
-            // Encontrar máximo y mínimo del día
-            const today = new Date(latestData.fecha);
-            const todayData = filteredData.filter(item => item.fecha === latestData.fecha);
-            const dailyHigh = Math.max(...todayData.map(item => item.high));
-            const dailyLow = Math.min(...todayData.map(item => item.low));
+            // Obtener el dato anterior para calcular cambios
+            const previousData = symbolHistoricalData[symbolHistoricalData.length - 2];
             
-            // Actualizar DOM
-            document.getElementById('current-price').textContent = `$${latestData.fin.toFixed(2)}`;
-            document.getElementById('current-volume').textContent = latestData.volume.toLocaleString();
-            document.getElementById('daily-high').textContent = `$${dailyHigh.toFixed(2)}`;
-            document.getElementById('daily-low').textContent = `$${dailyLow.toFixed(2)}`;
+            // Calcular cambio de precio
+            let priceChange = 0;
+            let priceChangePercent = 0;
             
+            if (previousData) {
+                priceChange = latestData.fin - previousData.fin;
+                priceChangePercent = (priceChange / previousData.fin) * 100;
+            }
+            
+            // Actualizar KPI de precio
+            document.getElementById('current-price').textContent = latestData.fin.toFixed(2);
             const priceChangeElement = document.getElementById('price-change');
-            priceChangeElement.textContent = `${priceChange >= 0 ? '+' : ''}${priceChange.toFixed(2)} (${priceChangePercent}%)`;
+            priceChangeElement.textContent = 
+                `${priceChange >= 0 ? '+' : ''}${priceChange.toFixed(2)} (${priceChangePercent >= 0 ? '+' : ''}${priceChangePercent.toFixed(2)}%)`;
             priceChangeElement.className = `kpi-change ${priceChange >= 0 ? 'positive' : 'negative'}`;
             
+            // Calcular cambio de volumen
+            let volumeChange = 0;
+            let volumeChangePercent = 0;
+            
+            if (previousData) {
+                volumeChange = latestData.volume - previousData.volume;
+                volumeChangePercent = (volumeChange / previousData.volume) * 100;
+            }
+            
+            // Actualizar KPI de volumen
+            document.getElementById('current-volume').textContent = latestData.volume.toLocaleString();
             const volumeChangeElement = document.getElementById('volume-change');
-            volumeChangeElement.textContent = `${volumeChange >= 0 ? '+' : ''}${volumeChange.toLocaleString()} (${volumeChangePercent}%)`;
+            volumeChangeElement.textContent = 
+                `${volumeChange >= 0 ? '+' : ''}${volumeChange.toLocaleString()} (${volumeChangePercent >= 0 ? '+' : ''}${volumeChangePercent.toFixed(2)}%)`;
             volumeChangeElement.className = `kpi-change ${volumeChange >= 0 ? 'positive' : 'negative'}`;
-        }
-
-        // Función para actualizar todos los gráficos
-        function updateCharts() {
-            updateCandleChart();
-            updateVolumeChart();
-            updateLineChart();
-        }
-
-        // Función para crear/actualizar el gráfico de velas
-        function updateCandleChart() {
-            const ctx = document.getElementById('candleChart').getContext('2d');
             
-            // Destruir gráfico existente si hay uno
-            if (charts.candle) {
-                charts.candle.destroy();
-            }
-            
-            // Preparar datos para el gráfico de velas
-            // Agrupar por día para mostrar velas diarias
-            const dailyData = {};
-            filteredData.forEach(item => {
-                if (!dailyData[item.fecha]) {
-                    dailyData[item.fecha] = {
-                        open: item.open,
-                        high: item.high,
-                        low: item.low,
-                        close: item.fin,
-                        volume: 0,
-                        date: item.fecha
-                    };
-                }
+            // Obtener el último pronóstico disponible
+            if (symbolForecastData.length > 0) {
+                const latestForecast = symbolForecastData[symbolForecastData.length - 1];
                 
-                dailyData[item.fecha].high = Math.max(dailyData[item.fecha].high, item.high);
-                dailyData[item.fecha].low = Math.min(dailyData[item.fecha].low, item.low);
-                dailyData[item.fecha].close = item.fin;
-                dailyData[item.fecha].volume += item.volume;
-            });
-            
-            const candleData = Object.values(dailyData);
-            
-            // Configurar datos para el gráfico
-            const ohlcData = candleData.map(item => ({
-                x: item.date,
-                o: item.open,
-                h: item.high,
-                l: item.low,
-                c: item.close
-            }));
-            
-            // Crear el gráfico
-            charts.candle = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    datasets: [{
-                        label: 'Precio',
-                        data: ohlcData,
-                        borderColor: chartColors.primary,
-                        backgroundColor: function(context) {
-                            const index = context.dataIndex;
-                            const value = context.dataset.data[index];
-                            return value.c >= value.o ? chartColors.up : chartColors.down;
-                        },
-                        borderWidth: 1,
-                        barPercentage: 0.8,
-                        categoryPercentage: 0.8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const point = context.raw;
-                                    return [
-                                        `Apertura: $${point.o}`,
-                                        `Máximo: $${point.h}`,
-                                        `Mínimo: $${point.l}`,
-                                        `Cierre: $${point.c}`
-                                    ];
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            type: 'time',
-                            time: {
-                                unit: 'day',
-                                tooltipFormat: 'MMM d, yyyy'
-                            },
-                            grid: {
-                                color: chartColors.grid
-                            },
-                            ticks: {
-                                color: chartColors.text
-                            }
-                        },
-                        y: {
-                            grid: {
-                                color: chartColors.grid
-                            },
-                            ticks: {
-                                color: chartColors.text
-                            }
-                        }
-                    },
-                    animation: {
-                        duration: 1000,
-                        easing: 'easeOutQuart'
-                    }
-                }
-            });
-            
-            // Ocultar spinner y mostrar gráfico
-            document.getElementById('candle-loading').style.display = 'none';
-            document.getElementById('candleChart').style.display = 'block';
-        }
-
-        // Función para crear/actualizar el gráfico de volumen
-        function updateVolumeChart() {
-            const ctx = document.getElementById('volumeChart').getContext('2d');
-            
-            // Destruir gráfico existente si hay uno
-            if (charts.volume) {
-                charts.volume.destroy();
-            }
-            
-            // Agrupar por día para mostrar volumen diario
-            const dailyData = {};
-            filteredData.forEach(item => {
-                if (!dailyData[item.fecha]) {
-                    dailyData[item.fecha] = {
-                        volume: 0,
-                        date: item.fecha,
-                        close: item.fin,
-                        open: item.open
-                    };
-                }
+                // Calcular cambios para Prophet
+                const prophetChange = latestForecast.Prophet_Forecast - latestData.fin;
+                const prophetChangePercent = (prophetChange / latestData.fin) * 100;
                 
-                dailyData[item.fecha].volume += item.volume;
-                dailyData[item.fecha].close = item.fin;
-            });
-            
-            const volumeData = Object.values(dailyData);
-            
-            // Crear el gráfico
-            charts.volume = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: volumeData.map(item => item.date),
-                    datasets: [{
-                        label: 'Volumen',
-                        data: volumeData.map(item => item.volume),
-                        backgroundColor: function(context) {
-                            const index = context.dataIndex;
-                            return volumeData[index].close >= volumeData[index].open ? 
-                                chartColors.up : chartColors.down;
-                        },
-                        borderColor: chartColors.primaryLight,
-                        borderWidth: 1,
-                        barPercentage: 0.8,
-                        categoryPercentage: 0.8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return `Volumen: ${context.raw.toLocaleString()}`;
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            type: 'time',
-                            time: {
-                                unit: 'day',
-                                tooltipFormat: 'MMM d, yyyy'
-                            },
-                            grid: {
-                                color: chartColors.grid
-                            },
-                            ticks: {
-                                color: chartColors.text
-                            }
-                        },
-                        y: {
-                            grid: {
-                                color: chartColors.grid
-                            },
-                            ticks: {
-                                color: chartColors.text,
-                                callback: function(value) {
-                                    if (value >= 1000000) {
-                                        return (value / 1000000).toFixed(1) + 'M';
-                                    } else if (value >= 1000) {
-                                        return (value / 1000).toFixed(1) + 'K';
-                                    }
-                                    return value;
-                                }
-                            }
-                        }
-                    },
-                    animation: {
-                        duration: 1000,
-                        easing: 'easeOutQuart'
-                    }
-                }
-            });
-            
-            // Ocultar spinner y mostrar gráfico
-            document.getElementById('volume-loading').style.display = 'none';
-            document.getElementById('volumeChart').style.display = 'block';
-        }
-
-        // Función para crear/actualizar el gráfico de línea
-        function updateLineChart() {
-            const ctx = document.getElementById('lineChart').getContext('2d');
-            
-            // Destruir gráfico existente si hay uno
-            if (charts.line) {
-                charts.line.destroy();
+                document.getElementById('prophet-forecast').textContent = latestForecast.Prophet_Forecast.toFixed(2);
+                const prophetChangeElement = document.getElementById('prophet-change');
+                prophetChangeElement.textContent = 
+                    `${prophetChange >= 0 ? '+' : ''}${prophetChange.toFixed(2)} (${prophetChangePercent >= 0 ? '+' : ''}${prophetChangePercent.toFixed(2)}%)`;
+                prophetChangeElement.className = `kpi-change ${prophetChange >= 0 ? 'positive' : 'negative'}`;
+                
+                // Calcular cambios para RNN
+                const rnnChange = latestForecast.RNN_Forecast - latestData.fin;
+                const rnnChangePercent = (rnnChange / latestData.fin) * 100;
+                
+                document.getElementById('rnn-forecast').textContent = latestForecast.RNN_Forecast.toFixed(2);
+                const rnnChangeElement = document.getElementById('rnn-change');
+                rnnChangeElement.textContent = 
+                    `${rnnChange >= 0 ? '+' : ''}${rnnChange.toFixed(2)} (${rnnChangePercent >= 0 ? '+' : ''}${rnnChangePercent.toFixed(2)}%)`;
+                rnnChangeElement.className = `kpi-change ${rnnChange >= 0 ? 'positive' : 'negative'}`;
             }
-            
-            // Preparar datos para el gráfico de línea (precio de cierre a lo largo del tiempo)
-            const lineData = filteredData.map(item => ({
-                x: item.fullDate,
-                y: item.fin
-            }));
-            
-            // Crear el gráfico
-            charts.line = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    datasets: [{
-                        label: 'Precio de cierre',
-                        data: lineData,
-                        borderColor: chartColors.primary,
-                        backgroundColor: chartColors.primaryLight,
-                        borderWidth: 2,
-                        pointRadius: 0,
-                        pointHoverRadius: 5,
-                        fill: true,
-                        tension: 0.1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: chartColors.text
-                            }
-                        },
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false,
-                            callbacks: {
-                                label: function(context) {
-                                    return `Precio: $${context.raw.y.toFixed(2)}`;
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            type: 'time',
-                            time: {
-                                unit: 'day',
-                                tooltipFormat: 'MMM d, yyyy HH:mm'
-                            },
-                            grid: {
-                                color: chartColors.grid
-                            },
-                            ticks: {
-                                color: chartColors.text
-                            }
-                        },
-                        y: {
-                            grid: {
-                                color: chartColors.grid
-                            },
-                            ticks: {
-                                color: chartColors.text,
-                                callback: function(value) {
-                                    return '$' + value.toFixed(2);
-                                }
-                            }
-                        }
-                    },
-                    interaction: {
-                        mode: 'index',
-                        intersect: false
-                    },
-                    animation: {
-                        duration: 1000,
-                        easing: 'easeOutQuart'
-                    }
-                }
-            });
-            
-            // Ocultar spinner y mostrar gráfico
-            document.getElementById('line-loading').style.display = 'none';
-            document.getElementById('lineChart').style.display = 'block';
         }
 
-        // Función para mostrar/ocultar estados de carga
-        function showLoadingState(show) {
-            const loadingElements = document.querySelectorAll('.loading');
-            const chartElements = document.querySelectorAll('canvas');
+        // Actualizar gráfico de precios
+        function updatePriceChart() {
+            if (!historicalData) return;
             
-            if (show) {
-                loadingElements.forEach(el => el.style.display = 'flex');
-                chartElements.forEach(el => el.style.display = 'none');
+            // Filtrar datos para el símbolo actual
+            let symbolHistoricalData = historicalData.filter(item => item.symbol === currentSymbol);
+            
+            if (symbolHistoricalData.length === 0) return;
+            
+            // Aplicar filtro de tiempo
+            const timeFilter = document.getElementById('time-filter').value;
+            const filterDays = parseInt(timeFilter);
+            const cutoffDate = new Date();
+            cutoffDate.setDate(cutoffDate.getDate() - filterDays);
+            
+            symbolHistoricalData = symbolHistoricalData.filter(item => item.fullDate >= cutoffDate);
+            
+            // Preparar datos para el gráfico
+            const dates = symbolHistoricalData.map(item => item.fullDate);
+            const prices = symbolHistoricalData.map(item => item.fin);
+            
+            // Configuración del gráfico
+            const options = {
+                series: [{
+                    name: 'Precio de cierre',
+                    data: prices.map((price, index) => ({
+                        x: dates[index],
+                        y: price
+                    }))
+                }],
+                chart: {
+                    type: 'area',
+                    height: '100%',
+                    background: 'transparent',
+                    foreColor: chartColors.text,
+                    toolbar: {
+                        show: true,
+                        tools: {
+                            download: false,
+                            selection: true,
+                            zoom: true,
+                            zoomin: true,
+                            zoomout: true,
+                            pan: true,
+                            reset: true
+                        }
+                    },
+                    zoom: {
+                        enabled: true,
+                        type: 'x',
+                        autoScaleYaxis: true
+                    },
+                    animations: {
+                        enabled: true,
+                        easing: 'easeinout',
+                        speed: 800
+                    }
+                },
+                colors: [chartColors.line],
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: 'smooth',
+                    width: 2
+                },
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        shadeIntensity: 0.5,
+                        opacityFrom: 0.6,
+                        opacityTo: 0.1,
+                        stops: [0, 90, 100]
+                    }
+                },
+                grid: {
+                    borderColor: chartColors.grid,
+                    strokeDashArray: 3,
+                    padding: {
+                        top: 10,
+                        right: 10,
+                        bottom: 10,
+                        left: 10
+                    }
+                },
+                xaxis: {
+                    type: 'datetime',
+                    axisBorder: {
+                        color: chartColors.grid
+                    },
+                    axisTicks: {
+                        color: chartColors.grid
+                    }
+                },
+                yaxis: {
+                    opposite: true,
+                    labels: {
+                        formatter: function(val) {
+                            return val.toFixed(2);
+                        }
+                    },
+                    tooltip: {
+                        enabled: true
+                    }
+                },
+                tooltip: {
+                    x: {
+                        format: 'dd MMM yyyy HH:mm'
+                    }
+                }
+            };
+            
+            // Renderizar o actualizar el gráfico
+            if (priceChart) {
+                priceChart.updateOptions(options);
             } else {
-                loadingElements.forEach(el => el.style.display = 'none');
+                priceChart = new ApexCharts(document.querySelector("#price-chart"), options);
+                priceChart.render();
+            }
+        }
+
+        // Actualizar gráfico de pronósticos
+        function updateForecastChart() {
+            if (!forecastData) return;
+            
+            // Filtrar datos para el símbolo actual y los días 15-17
+            let symbolForecastData = forecastData.filter(item => 
+                item.symbol === currentSymbol
+            );
+            
+            // Obtener días 15, 16 y 17
+            const targetDates = [];
+            const now = new Date();
+            
+            for (let i = 15; i <= 17; i++) {
+                const date = new Date(now);
+                date.setDate(now.getDate() + i);
+                targetDates.push(date.toISOString().split('T')[0]);
+            }
+            
+            symbolForecastData = symbolForecastData.filter(item => {
+                const itemDate = item.fullDate.toISOString().split('T')[0];
+                return targetDates.includes(itemDate);
+            });
+            
+            if (symbolForecastData.length === 0) {
+                // Si no hay datos para los días 15-17, mostrar los últimos 3 días disponibles
+                symbolForecastData = forecastData.filter(item => item.symbol === currentSymbol);
+                symbolForecastData = symbolForecastData.slice(-3);
+            }
+            
+            if (symbolForecastData.length === 0) return;
+            
+            // Preparar datos para el gráfico
+            const series = [
+                {
+                    name: 'Prophet',
+                    data: symbolForecastData.map(item => ({
+                        x: item.fullDate,
+                        y: item.Prophet_Forecast
+                    }))
+                },
+                {
+                    name: 'Regresión Lineal',
+                    data: symbolForecastData.map(item => ({
+                        x: item.fullDate,
+                        y: item.Regresion_Linear_Forecast
+                    }))
+                },
+                {
+                    name: 'ARIMA',
+                    data: symbolForecastData.map(item => ({
+                        x: item.fullDate,
+                        y: item.ARIMA_Forecast
+                    }))
+                },
+                {
+                    name: 'RNN',
+                    data: symbolForecastData.map(item => ({
+                        x: item.fullDate,
+                        y: item.RNN_Forecast
+                    }))
+                }
+            ];
+            
+            // Configuración del gráfico
+            const options = {
+                series: series,
+                chart: {
+                    type: 'line',
+                    height: '100%',
+                    background: 'transparent',
+                    foreColor: chartColors.text,
+                    toolbar: {
+                        show: false
+                    },
+                    animations: {
+                        enabled: true,
+                        easing: 'easeinout',
+                        speed: 800
+                    }
+                },
+                colors: [chartColors.prophet, chartColors.linear, chartColors.arima, chartColors.rnn],
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: 'smooth',
+                    width: 2
+                },
+                grid: {
+                    borderColor: chartColors.grid,
+                    strokeDashArray: 3,
+                    padding: {
+                        top: 10,
+                        right: 10,
+                        bottom: 10,
+                        left: 10
+                    }
+                },
+                xaxis: {
+                    type: 'datetime',
+                    axisBorder: {
+                        color: chartColors.grid
+                    },
+                    axisTicks: {
+                        color: chartColors.grid
+                    },
+                    labels: {
+                        format: 'dd MMM'
+                    }
+                },
+                yaxis: {
+                    opposite: true,
+                    labels: {
+                        formatter: function(val) {
+                            return val.toFixed(2);
+                        }
+                    },
+                    tooltip: {
+                        enabled: true
+                    }
+                },
+                tooltip: {
+                    x: {
+                        format: 'dd MMM yyyy'
+                    }
+                },
+                legend: {
+                    position: 'top',
+                    horizontalAlign: 'right'
+                }
+            };
+            
+            // Renderizar o actualizar el gráfico
+            if (forecastChart) {
+                forecastChart.updateOptions(options);
+            } else {
+                forecastChart = new ApexCharts(document.querySelector("#forecast-chart"), options);
+                forecastChart.render();
+            }
+        }
+
+        // Actualizar gráfico de volumen
+        function updateVolumeChart() {
+            if (!historicalData) return;
+            
+            // Filtrar datos para el símbolo actual
+            let symbolHistoricalData = historicalData.filter(item => item.symbol === currentSymbol);
+            
+            if (symbolHistoricalData.length === 0) return;
+            
+            // Aplicar filtro de tiempo (mismo que para el gráfico de precios)
+            const timeFilter = document.getElementById('time-filter').value;
+            const filterDays = parseInt(timeFilter);
+            const cutoffDate = new Date();
+            cutoffDate.setDate(cutoffDate.getDate() - filterDays);
+            
+            symbolHistoricalData = symbolHistoricalData.filter(item => item.fullDate >= cutoffDate);
+            
+            // Preparar datos para el gráfico
+            const dates = symbolHistoricalData.map(item => item.fullDate);
+            const volumes = symbolHistoricalData.map(item => item.volume);
+            
+            // Configuración del gráfico
+            const options = {
+                series: [{
+                    name: 'Volumen',
+                    data: volumes.map((volume, index) => ({
+                        x: dates[index],
+                        y: volume
+                    }))
+                }],
+                chart: {
+                    type: 'bar',
+                    height: '100%',
+                    background: 'transparent',
+                    foreColor: chartColors.text,
+                    toolbar: {
+                        show: false
+                    },
+                    animations: {
+                        enabled: true,
+                        easing: 'easeinout',
+                        speed: 800
+                    }
+                },
+                colors: [chartColors.volume],
+                dataLabels: {
+                    enabled: false
+                },
+                grid: {
+                    borderColor: chartColors.grid,
+                    strokeDashArray: 3,
+                    padding: {
+                        top: 10,
+                        right: 10,
+                        bottom: 10,
+                        left: 10
+                    }
+                },
+                xaxis: {
+                    type: 'datetime',
+                    axisBorder: {
+                        color: chartColors.grid
+                    },
+                    axisTicks: {
+                        color: chartColors.grid
+                    }
+                },
+                yaxis: {
+                    opposite: true,
+                    labels: {
+                        formatter: function(val) {
+                            if (val >= 1000000) {
+                                return (val / 1000000).toFixed(1) + 'M';
+                            } else if (val >= 1000) {
+                                return (val / 1000).toFixed(1) + 'K';
+                            }
+                            return val;
+                        }
+                    }
+                },
+                tooltip: {
+                    x: {
+                        format: 'dd MMM yyyy HH:mm'
+                    },
+                    y: {
+                        formatter: function(val) {
+                            return val.toLocaleString();
+                        }
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        borderRadius: 3,
+                        columnWidth: '60%'
+                    }
+                }
+            };
+            
+            // Renderizar o actualizar el gráfico
+            if (volumeChart) {
+                volumeChart.updateOptions(options);
+            } else {
+                volumeChart = new ApexCharts(document.querySelector("#volume-chart"), options);
+                volumeChart.render();
             }
         }
     </script>
 </body>
 </html>
-
