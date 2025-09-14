@@ -1,0 +1,402 @@
+[
+    {
+        "symbol": "AAPL",
+        "Fecha": "2025-09-13",
+        "Prophet_Forecast": 202.6203605734617,
+        "Regresion_Linear_Forecast": 239.22489916026825,
+        "ARIMA_Forecast": 234.45621705061453,
+        "RNN_Forecast": 235.05774
+    },
+    {
+        "symbol": "AAPL",
+        "Fecha": "2025-09-14",
+        "Prophet_Forecast": 202.80038047838264,
+        "Regresion_Linear_Forecast": 239.77324397902703,
+        "ARIMA_Forecast": 235.24794854019416,
+        "RNN_Forecast": 235.17458
+    },
+    {
+        "symbol": "AAPL",
+        "Fecha": "2025-09-15",
+        "Prophet_Forecast": 234.81386746921257,
+        "Regresion_Linear_Forecast": 240.321588797844,
+        "ARIMA_Forecast": 237.14255221711244,
+        "RNN_Forecast": 235.46817
+    },
+    {
+        "symbol": "AAPL",
+        "Fecha": "2025-09-16",
+        "Prophet_Forecast": 233.4978006705769,
+        "Regresion_Linear_Forecast": 240.8699336166028,
+        "ARIMA_Forecast": 238.882541702736,
+        "RNN_Forecast": 235.22047
+    },
+    {
+        "symbol": "AAPL",
+        "Fecha": "2025-09-17",
+        "Prophet_Forecast": 234.70934229848467,
+        "Regresion_Linear_Forecast": 241.41827843541975,
+        "ARIMA_Forecast": 238.8343143458173,
+        "RNN_Forecast": 235.03268
+    },
+    {
+        "symbol": "NVDA",
+        "Fecha": "2025-09-13",
+        "Prophet_Forecast": 145.5181032513786,
+        "Regresion_Linear_Forecast": 172.91372635072912,
+        "ARIMA_Forecast": 177.49649184156075,
+        "RNN_Forecast": 172.578
+    },
+    {
+        "symbol": "NVDA",
+        "Fecha": "2025-09-14",
+        "Prophet_Forecast": 145.54724968254183,
+        "Regresion_Linear_Forecast": 172.72013383897138,
+        "ARIMA_Forecast": 176.19793525199066,
+        "RNN_Forecast": 171.47067
+    },
+    {
+        "symbol": "NVDA",
+        "Fecha": "2025-09-15",
+        "Prophet_Forecast": 173.60024809428515,
+        "Regresion_Linear_Forecast": 172.52654132718453,
+        "ARIMA_Forecast": 175.26858594835244,
+        "RNN_Forecast": 171.20526
+    },
+    {
+        "symbol": "NVDA",
+        "Fecha": "2025-09-16",
+        "Prophet_Forecast": 173.32675037941533,
+        "Regresion_Linear_Forecast": 172.3329488154268,
+        "ARIMA_Forecast": 175.05916763235942,
+        "RNN_Forecast": 171.18857
+    },
+    {
+        "symbol": "NVDA",
+        "Fecha": "2025-09-17",
+        "Prophet_Forecast": 173.78737322823352,
+        "Regresion_Linear_Forecast": 172.13935630363994,
+        "ARIMA_Forecast": 175.0866950291079,
+        "RNN_Forecast": 171.42668
+    },
+    {
+        "symbol": "TSLA",
+        "Fecha": "2025-09-13",
+        "Prophet_Forecast": 308.5092195800231,
+        "Regresion_Linear_Forecast": 358.0751526571112,
+        "ARIMA_Forecast": 402.2014322794129,
+        "RNN_Forecast": 352.98053
+    },
+    {
+        "symbol": "TSLA",
+        "Fecha": "2025-09-14",
+        "Prophet_Forecast": 309.47864548825413,
+        "Regresion_Linear_Forecast": 359.0950402611634,
+        "ARIMA_Forecast": 410.92101952914817,
+        "RNN_Forecast": 356.0337
+    },
+    {
+        "symbol": "TSLA",
+        "Fecha": "2025-09-15",
+        "Prophet_Forecast": 360.9477493054385,
+        "Regresion_Linear_Forecast": 360.1149278652156,
+        "ARIMA_Forecast": 411.41257510711625,
+        "RNN_Forecast": 359.34833
+    },
+    {
+        "symbol": "TSLA",
+        "Fecha": "2025-09-16",
+        "Prophet_Forecast": 358.3797894862297,
+        "Regresion_Linear_Forecast": 361.1348154692678,
+        "ARIMA_Forecast": 408.8788296750656,
+        "RNN_Forecast": 360.04758
+    },
+    {
+        "symbol": "TSLA",
+        "Fecha": "2025-09-17",
+        "Prophet_Forecast": 360.2992129701578,
+        "Regresion_Linear_Forecast": 362.15470307332,
+        "ARIMA_Forecast": 410.2556988885835,
+        "RNN_Forecast": 361.96735
+    },
+    {
+        "symbol": "MSFT",
+        "Fecha": "2025-09-13",
+        "Prophet_Forecast": 418.74049884733273,
+        "Regresion_Linear_Forecast": 496.5388311566785,
+        "ARIMA_Forecast": 513.242024835589,
+        "RNN_Forecast": 503.10394
+    },
+    {
+        "symbol": "MSFT",
+        "Fecha": "2025-09-14",
+        "Prophet_Forecast": 418.5907621433138,
+        "Regresion_Linear_Forecast": 495.7834891511593,
+        "ARIMA_Forecast": 512.4628305815787,
+        "RNN_Forecast": 503.17972
+    },
+    {
+        "symbol": "MSFT",
+        "Fecha": "2025-09-15",
+        "Prophet_Forecast": 502.2485384151541,
+        "Regresion_Linear_Forecast": 495.0281471455237,
+        "ARIMA_Forecast": 511.7676271828994,
+        "RNN_Forecast": 502.61472
+    },
+    {
+        "symbol": "MSFT",
+        "Fecha": "2025-09-16",
+        "Prophet_Forecast": 501.5438390194321,
+        "Regresion_Linear_Forecast": 494.2728051398881,
+        "ARIMA_Forecast": 511.988577767246,
+        "RNN_Forecast": 502.5488
+    },
+    {
+        "symbol": "MSFT",
+        "Fecha": "2025-09-17",
+        "Prophet_Forecast": 500.94293748245866,
+        "Regresion_Linear_Forecast": 493.5174631343689,
+        "ARIMA_Forecast": 510.88959661042935,
+        "RNN_Forecast": 502.11304
+    },
+    {
+        "symbol": "META",
+        "Fecha": "2025-09-13",
+        "Prophet_Forecast": 640.819194740515,
+        "Regresion_Linear_Forecast": 745.104558185325,
+        "ARIMA_Forecast": 752.2601615267627,
+        "RNN_Forecast": 745.98474
+    },
+    {
+        "symbol": "META",
+        "Fecha": "2025-09-14",
+        "Prophet_Forecast": 642.4603654253414,
+        "Regresion_Linear_Forecast": 744.4750237985863,
+        "ARIMA_Forecast": 751.845728926769,
+        "RNN_Forecast": 746.14886
+    },
+    {
+        "symbol": "META",
+        "Fecha": "2025-09-15",
+        "Prophet_Forecast": 766.237892216484,
+        "Regresion_Linear_Forecast": 743.8454894119059,
+        "ARIMA_Forecast": 753.8480362684409,
+        "RNN_Forecast": 746.593
+    },
+    {
+        "symbol": "META",
+        "Fecha": "2025-09-16",
+        "Prophet_Forecast": 766.4106380007335,
+        "Regresion_Linear_Forecast": 743.2159550251672,
+        "ARIMA_Forecast": 755.176080863614,
+        "RNN_Forecast": 747.51373
+    },
+    {
+        "symbol": "META",
+        "Fecha": "2025-09-17",
+        "Prophet_Forecast": 766.3257816178482,
+        "Regresion_Linear_Forecast": 742.5864206384867,
+        "ARIMA_Forecast": 755.2301974828201,
+        "RNN_Forecast": 748.19183
+    },
+    {
+        "symbol": "JNJ",
+        "Fecha": "2025-09-13",
+        "Prophet_Forecast": 151.20668500491956,
+        "Regresion_Linear_Forecast": 179.97768647846533,
+        "ARIMA_Forecast": 177.40794683087074,
+        "RNN_Forecast": 178.55235
+    },
+    {
+        "symbol": "JNJ",
+        "Fecha": "2025-09-14",
+        "Prophet_Forecast": 151.10854006149725,
+        "Regresion_Linear_Forecast": 180.21919867926044,
+        "ARIMA_Forecast": 177.08008744627847,
+        "RNN_Forecast": 178.73541
+    },
+    {
+        "symbol": "JNJ",
+        "Fecha": "2025-09-15",
+        "Prophet_Forecast": 177.00697684074868,
+        "Regresion_Linear_Forecast": 180.46071088002645,
+        "ARIMA_Forecast": 177.2452709701415,
+        "RNN_Forecast": 178.8324
+    },
+    {
+        "symbol": "JNJ",
+        "Fecha": "2025-09-16",
+        "Prophet_Forecast": 176.57591307339675,
+        "Regresion_Linear_Forecast": 180.7022230807925,
+        "ARIMA_Forecast": 177.56132588543915,
+        "RNN_Forecast": 179.00412
+    },
+    {
+        "symbol": "JNJ",
+        "Fecha": "2025-09-17",
+        "Prophet_Forecast": 176.37192206570285,
+        "Regresion_Linear_Forecast": 180.9437352815876,
+        "ARIMA_Forecast": 177.59857175948744,
+        "RNN_Forecast": 179.11577
+    },
+    {
+        "symbol": "IBM",
+        "Fecha": "2025-09-13",
+        "Prophet_Forecast": 220.40380790810792,
+        "Regresion_Linear_Forecast": 249.7382775753213,
+        "ARIMA_Forecast": 253.0529334041082,
+        "RNN_Forecast": 255.62297
+    },
+    {
+        "symbol": "IBM",
+        "Fecha": "2025-09-14",
+        "Prophet_Forecast": 221.92536185583756,
+        "Regresion_Linear_Forecast": 249.9396463505691,
+        "ARIMA_Forecast": 252.1725796528788,
+        "RNN_Forecast": 256.66327
+    },
+    {
+        "symbol": "IBM",
+        "Fecha": "2025-09-15",
+        "Prophet_Forecast": 262.561556753721,
+        "Regresion_Linear_Forecast": 250.141015125846,
+        "ARIMA_Forecast": 252.11945155236884,
+        "RNN_Forecast": 257.84442
+    },
+    {
+        "symbol": "IBM",
+        "Fecha": "2025-09-16",
+        "Prophet_Forecast": 264.078537708914,
+        "Regresion_Linear_Forecast": 250.34238390112296,
+        "ARIMA_Forecast": 252.4422562534934,
+        "RNN_Forecast": 259.09683
+    },
+    {
+        "symbol": "IBM",
+        "Fecha": "2025-09-17",
+        "Prophet_Forecast": 266.9569249887278,
+        "Regresion_Linear_Forecast": 250.5437526763708,
+        "ARIMA_Forecast": 252.9370003632231,
+        "RNN_Forecast": 260.08334
+    },
+    {
+        "symbol": "GOOGL",
+        "Fecha": "2025-09-13",
+        "Prophet_Forecast": 215.28628123501088,
+        "Regresion_Linear_Forecast": 236.07002297521103,
+        "ARIMA_Forecast": 241.24487662163105,
+        "RNN_Forecast": 247.87846
+    },
+    {
+        "symbol": "GOOGL",
+        "Fecha": "2025-09-14",
+        "Prophet_Forecast": 217.43728340320496,
+        "Regresion_Linear_Forecast": 237.2385298109148,
+        "ARIMA_Forecast": 241.81386033406787,
+        "RNN_Forecast": 252.44878
+    },
+    {
+        "symbol": "GOOGL",
+        "Fecha": "2025-09-15",
+        "Prophet_Forecast": 249.94291675551213,
+        "Regresion_Linear_Forecast": 238.4070366465021,
+        "ARIMA_Forecast": 242.46647270191275,
+        "RNN_Forecast": 257.13004
+    },
+    {
+        "symbol": "GOOGL",
+        "Fecha": "2025-09-16",
+        "Prophet_Forecast": 250.39308982613252,
+        "Regresion_Linear_Forecast": 239.57554348220583,
+        "ARIMA_Forecast": 242.81949237641015,
+        "RNN_Forecast": 260.86255
+    },
+    {
+        "symbol": "GOOGL",
+        "Fecha": "2025-09-17",
+        "Prophet_Forecast": 254.08493257771,
+        "Regresion_Linear_Forecast": 240.74405031779315,
+        "ARIMA_Forecast": 243.1553327550785,
+        "RNN_Forecast": 264.44678
+    },
+    {
+        "symbol": "AMZN",
+        "Fecha": "2025-09-13",
+        "Prophet_Forecast": 199.25266000531545,
+        "Regresion_Linear_Forecast": 234.63723958318587,
+        "ARIMA_Forecast": 227.7086794595576,
+        "RNN_Forecast": 234.22504
+    },
+    {
+        "symbol": "AMZN",
+        "Fecha": "2025-09-14",
+        "Prophet_Forecast": 199.4947608673428,
+        "Regresion_Linear_Forecast": 235.01270870561711,
+        "ARIMA_Forecast": 229.2418380718774,
+        "RNN_Forecast": 234.76033
+    },
+    {
+        "symbol": "AMZN",
+        "Fecha": "2025-09-15",
+        "Prophet_Forecast": 234.1274616341645,
+        "Regresion_Linear_Forecast": 235.38817782810656,
+        "ARIMA_Forecast": 231.25044279453772,
+        "RNN_Forecast": 235.02402
+    },
+    {
+        "symbol": "AMZN",
+        "Fecha": "2025-09-16",
+        "Prophet_Forecast": 232.86768090100503,
+        "Regresion_Linear_Forecast": 235.763646950596,
+        "ARIMA_Forecast": 231.61946070401152,
+        "RNN_Forecast": 235.47888
+    },
+    {
+        "symbol": "AMZN",
+        "Fecha": "2025-09-17",
+        "Prophet_Forecast": 232.71582961621337,
+        "Regresion_Linear_Forecast": 236.13911607308543,
+        "ARIMA_Forecast": 231.33715288297665,
+        "RNN_Forecast": 235.35057
+    },
+    {
+        "symbol": "V",
+        "Fecha": "2025-09-13",
+        "Prophet_Forecast": 285.09422533475043,
+        "Regresion_Linear_Forecast": 347.8205606098636,
+        "ARIMA_Forecast": 339.51162338031565,
+        "RNN_Forecast": 344.04947
+    },
+    {
+        "symbol": "V",
+        "Fecha": "2025-09-14",
+        "Prophet_Forecast": 284.0497287261848,
+        "Regresion_Linear_Forecast": 348.0168400017137,
+        "ARIMA_Forecast": 340.8986292103881,
+        "RNN_Forecast": 343.5408
+    },
+    {
+        "symbol": "V",
+        "Fecha": "2025-09-15",
+        "Prophet_Forecast": 336.491948878488,
+        "Regresion_Linear_Forecast": 348.21311939356383,
+        "ARIMA_Forecast": 340.4583920648105,
+        "RNN_Forecast": 343.65598
+    },
+    {
+        "symbol": "V",
+        "Fecha": "2025-09-16",
+        "Prophet_Forecast": 334.9341009974223,
+        "Regresion_Linear_Forecast": 348.40939878541394,
+        "ARIMA_Forecast": 339.9773254177022,
+        "RNN_Forecast": 343.37936
+    },
+    {
+        "symbol": "V",
+        "Fecha": "2025-09-17",
+        "Prophet_Forecast": 334.5083663399224,
+        "Regresion_Linear_Forecast": 348.6056781772349,
+        "ARIMA_Forecast": 340.9169041769076,
+        "RNN_Forecast": 343.0268
+    }
+]
